@@ -1002,7 +1002,11 @@ void Draw_SetDisplayMode(DisplayMode* mode) {
             break;
         }
     }
-    display_size.y = mode->vertical_resolution ? 480 : 240;
+    if (mode->vertical_resolution) {
+        display_size.y = 480;
+    } else {
+        display_size.y = mode->pal ? 256 : 240;
+    }
     ApplyDisplayPendingChanges();
 
     double new_target_fps = mode->pal ? VSYNC_PAL : VSYNC_NTSC;
